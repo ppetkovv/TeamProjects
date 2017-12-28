@@ -3,33 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Contracts;
+using SnakeGame.Contracts;
 
-namespace Snake.Models
+namespace SnakeGame.Models
 {
     class Apple : IApple
     {
         private Position apple;
-        private Random randomNumberGenerator = new Random();
+        private Random randomNumberGenerator;
 
-        public void GenerateApple(ISnake snakeForChecking)
+        public Apple()
         {
-            do
-            {
-                apple = new Position(randomNumberGenerator.Next(0, Console.WindowHeight),
+            this.randomNumberGenerator = new Random();
+            this.apple = new Position(randomNumberGenerator.Next(0, Console.WindowHeight),
                                          randomNumberGenerator.Next(0, Console.WindowWidth));
-            } while (snakeForChecking.SnakeElements.Contains(apple) || obstacles.Contains(apple));
-
-            Console.SetCursorPosition(apple.Col, apple.Row);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("@");
         }
+
+        public int AppleColPosition => this.apple.Col;
+        public int AppleRowPosition => this.apple.Row;
 
         public void Print()
         {
             Console.SetCursorPosition(apple.Col, apple.Row);
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write('@');
         }
-
     }
 }

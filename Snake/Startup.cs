@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Engine;
+using SnakeGame.Engine;
 
-namespace Snake
+namespace SnakeGame
 {
     class Startup
     {

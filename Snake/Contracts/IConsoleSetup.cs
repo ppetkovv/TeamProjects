@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SnakeGame.Contracts
 {
-    public interface IApple
+    interface IConsoleSetup
     {
-        int AppleRowPosition { get; }
-        int AppleColPosition { get; }
-        void Print();
+        void SetupConsole();
+        void SlowAction(int milliseconds);
     }
 }

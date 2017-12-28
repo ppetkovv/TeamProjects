@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SnakeGame.Contracts
+namespace SnakeGame.Models
 {
-    public interface IEngine
+    class Obstacle
     {
-        void Start();
     }
 }

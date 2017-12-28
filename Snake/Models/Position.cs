@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Contracts;
+using SnakeGame.Contracts;
 
-namespace Snake.Models
+namespace SnakeGame.Models
 {
-    struct Position : IPosition
+    public struct Position : IPosition
     {
         private int row;
         private int col;

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SnakeGame.Models;
 
-namespace Snake.Contracts
+namespace SnakeGame.Contracts
 {
-    interface ISnake
+    public interface ISnake
     {
-        bool IsAlive { get; set; }
-        void Move(int direction);
-        public Queue<IPosition> SnakeElements { get; }
+        Queue<Position> SnakeElements { get; }
+        bool IsAlive { get; }
+        void Move(int direction, ILevel currentLevel);
+        //void Print();
     }
 }
