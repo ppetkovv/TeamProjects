@@ -9,10 +9,6 @@ namespace SnakeGame.Models
 {
     class Snake : ISnake
     {
-        //static byte right = 0;
-        //static byte left = 1;
-        //static byte down = 2;
-        //static byte up = 3;
         private static Position[] directions = new Position[]
              {
                new Position(0,1),  //right
@@ -34,7 +30,7 @@ namespace SnakeGame.Models
             this.isAlive = true;
         }
 
-        public Queue<Position> SnakeElements { get => snakeElements; }
+        public Queue<Position> SnakeElements { get => this.snakeElements; }
         public bool IsAlive { get => this.isAlive; private set => this.isAlive = value; }
 
         public void Move(int direction, ILevel currentLevel)
@@ -45,7 +41,10 @@ namespace SnakeGame.Models
                                                  snakeHead.Col + nextDirection.Col);
             this.CheckForCollision(snakeNewHead);
             if (!this.IsAlive)
+            {
                 return;
+            }
+            this.TeleportIfIsNeeded(snakeNewHead);
             snakeElements.Enqueue(snakeNewHead);
             Console.SetCursorPosition(snakeNewHead.Col, snakeNewHead.Row);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -54,6 +53,7 @@ namespace SnakeGame.Models
             {
                 currentLevel.GenerateApple();
                 currentLevel.CurrentlyEatenApples += 1;
+                currentLevel.AddPoints();
             }
             else
             {
@@ -62,7 +62,6 @@ namespace SnakeGame.Models
                 Console.Write(' ');
             }
             //this.Print();
-            currentLevel.Apple.Print();
         }
         //Without printing because of lagging !!!
         //public void Print()
@@ -78,9 +77,29 @@ namespace SnakeGame.Models
 
         private void CheckForCollision(Position newHead)
         {
-            if ((this.snakeElements.Contains(newHead)) || newHead.Row < 0 || newHead.Row >= Console.WindowHeight || newHead.Col < 0 || newHead.Col >= Console.WindowWidth)
+            if(this.snakeElements.Any(elem=>elem.Row==newHead.Row&&elem.Col==newHead.Col))
             {
-                this.IsAlive = false;
+                this.isAlive = false;
+            }
+        }
+
+        private void TeleportIfIsNeeded(Position newHead)
+        {
+            if (newHead.Col < 0)
+            {
+                newHead.Col = Console.WindowWidth - 1;
+            }
+            else if (newHead.Col == Console.WindowWidth)
+            {
+                newHead.Col = 0;
+            }
+            else if (newHead.Row < 0)
+            {
+                newHead.Row = Console.WindowHeight - 1;
+            }
+            else if (newHead.Row == Console.WindowHeight)
+            {
+                newHead.Row = 0;
             }
         }
     }

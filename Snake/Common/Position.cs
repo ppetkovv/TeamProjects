@@ -7,12 +7,12 @@ using SnakeGame.Contracts;
 
 namespace SnakeGame.Models
 {
-    public struct Position : IPosition
+    public class Position : IPosition
     {
         private int row;
         private int col;
 
-        public Position(int row, int col):this()
+        public Position(int row, int col)
         {
             this.Row = row;
             this.Col = col;

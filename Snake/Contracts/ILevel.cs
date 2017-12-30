@@ -13,6 +13,11 @@ namespace SnakeGame.Contracts
         int ApplesTarget { get; }
         int CurrentlyEatenApples { get; set; }
         IApple Apple { get; }
+        int LastAppleCreationTime { get; }
+        int NegativePointsPerMissedApple { get; }
+        int AllLevelPoints { get; }
+        void AddPoints();
         void GenerateApple();
+        void CheckForAppleTimeElapsed();
     }
 }

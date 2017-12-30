@@ -19,5 +19,13 @@ namespace SnakeGame.Common
         {
             Thread.Sleep(milliseconds);
         }
+
+        public static void CleaningTheConsoleBuffer()
+        {
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
+        }
     }
 }
