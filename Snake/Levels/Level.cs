@@ -5,15 +5,13 @@ using System;
 
 namespace SnakeGame.Levels
 {
-    public class Level : ILevel
+    public   class Level : ILevel
     {
         private int slowActionGame;
         private int initialSnakeLevelLength;
         private int applesToBeEaten;
         private int currentlyEatenApples;
-        private Random randomNumberGenerator;
-        private Position applePosition;
-        //////
+        private IApple apple;
         private const int appleDissapearTimeInMilliseconds = 10000;
         private IPoints levelPoints;
         private int lastAppleCreationTime = 0;
@@ -28,6 +26,8 @@ namespace SnakeGame.Levels
             this.NegativePointsPerMissedApple = negativePointsPerMissedApple;
             this.levelPoints = new Points(snakeLevelLength);
         }
+
+        public IApple Apple { get => this.apple; }
 
         public int SlowActionGame
         {
@@ -52,17 +52,15 @@ namespace SnakeGame.Levels
             get => this.currentlyEatenApples;
             set
             {
-                //if (value != this.currentlyEatenApples + 1)
-                //{
-                //    throw new ArgumentException(GlobalConstants.InvalidApplesState);
-                //}
+                if (value != this.currentlyEatenApples + 1)
+                {
+                    throw new ArgumentException(GlobalConstants.InvalidApplesState);
+                }
 
                 this.currentlyEatenApples = value;
             }
         }
         
-        public Position ApplePosition => this.applePosition;
-
         public int LastAppleCreationTime
         {
             get => this.lastAppleCreationTime;
@@ -79,13 +77,13 @@ namespace SnakeGame.Levels
 
         public void GenerateApple()
         {
-            this.randomNumberGenerator = new Random();
-            this.applePosition = new Position(randomNumberGenerator.Next(0, Console.WindowHeight),
-                                             randomNumberGenerator.Next(0, Console.WindowWidth));
-            
-            Console.SetCursorPosition(ApplePosition.Col, ApplePosition.Row);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write('@');
+            if (this.Apple != null)
+            {
+                Console.SetCursorPosition(this.Apple.AppleColPosition, this.Apple.AppleRowPosition);
+                Console.Write(' ');
+            }
+            this.apple = new Apple();
+            this.apple.Print();
             this.LastAppleCreationTime = Environment.TickCount;
         }
 
