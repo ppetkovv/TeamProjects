@@ -47,7 +47,6 @@
     <Compile Include="Common\Directions.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Points.cs" />
-    <Compile Include="Contracts\IApple.cs" />
     <Compile Include="Contracts\IConsoleSetup.cs" />
     <Compile Include="Contracts\IPoints.cs" />
     <Compile Include="Contracts\ISnakeEngine.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="Levels\SeventhLevel.cs" />
     <Compile Include="Levels\SixthLevel.cs" />
     <Compile Include="Levels\ThirdLevel.cs" />
-    <Compile Include="Models\Apple.cs" />
     <Compile Include="Models\Obstacle.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\Snake.cs" />

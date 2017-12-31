@@ -1,4 +1,7 @@
-﻿namespace SnakeGame.Contracts
+﻿using SnakeGame.Models;
+using System.Collections.Generic;
+
+namespace SnakeGame.Contracts
 {
     public interface ILevel
     {
@@ -6,12 +9,13 @@
         int InitialSnakeLevelLength { get; }
         int ApplesToBeEaten { get; }
         int CurrentlyEatenApples { get; set; }
-        IApple Apple { get; }
+        Position ApplePosition { get; }
+        void GenerateApple();
+        //////////
         int LastAppleCreationTime { get; }
         int NegativePointsPerMissedApple { get; }
         int AllLevelPoints { get; }
         void AddPoints();
-        void GenerateApple();
         void CheckForAppleTimeElapsed();
     }
 }
