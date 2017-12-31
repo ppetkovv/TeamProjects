@@ -1,6 +1,6 @@
 ﻿namespace SnakeGame.Contracts
 {
-    interface IPoints
+    public interface IPoints
     {
         int PositivePoints { get; set; }
         int NegativePoints { get; set; }

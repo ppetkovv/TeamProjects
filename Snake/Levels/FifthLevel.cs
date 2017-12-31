@@ -2,13 +2,13 @@
 {
     public class FifthLevel : Level
     {
-        private const int SlowActionGameInMilliseconds = 30;
-        private const int SnakeFifthLevelLength = 9;
-        private const int ApplesTargetCount = 11;
-        private const int NegativePointsPerMissedApple = 70;
-        
+        private const int slowActionGameInMilliseconds = 30;
+        private const int snakeFifthLevelLength = 9;
+        private const int applesTargetCount = 11;
+        private const int negativePointsPerMissedApple = 70;
+
         public FifthLevel() : 
-            base(SlowActionGameInMilliseconds, SnakeFifthLevelLength, ApplesTargetCount, NegativePointsPerMissedApple)
+            base(slowActionGameInMilliseconds, snakeFifthLevelLength, applesTargetCount, negativePointsPerMissedApple)
         {
         }
     }

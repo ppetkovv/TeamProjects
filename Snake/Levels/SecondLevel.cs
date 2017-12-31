@@ -2,13 +2,13 @@
 {
     public class SecondLevel : Level
     {
-        private const int SlowActionGameInMilliseconds = 45;
-        private const int SnakeSecondLevelLength = 6;
-        private const int ApplesTargetCount = 5;
-        private const int NegativePointsPerMissedApple = 55;
+        private const int slowActionGameInMilliseconds = 45;
+        private const int snakeSecondLevelLength = 6;
+        private const int applesTargetCount = 5;
+        private const int negativePointsPerApple = 55;
 
         public SecondLevel() : 
-            base(SlowActionGameInMilliseconds, SnakeSecondLevelLength, ApplesTargetCount, NegativePointsPerMissedApple)
+            base(slowActionGameInMilliseconds, snakeSecondLevelLength, applesTargetCount, negativePointsPerApple)
         {
         }
     }

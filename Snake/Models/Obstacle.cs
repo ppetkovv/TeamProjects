@@ -1,24 +1,26 @@
-﻿using System;
+﻿using SnakeGame.Contracts;
+using System;
 
 namespace SnakeGame.Models
 {
-    public class Obstacle
+    public class Obstacle : IObstacle
     {
-        private Position singleObstacle;
-        private Random randomNumberGenerator;
+        private Position obstacle;
+        private Random randomNumberGeneratorForObstacle;
 
         public Obstacle()
         {
-            this.randomNumberGenerator = new Random();
-            this.singleObstacle = new Position(randomNumberGenerator.Next(0, Console.WindowHeight),
-                                               randomNumberGenerator.Next(0, Console.WindowWidth));
+            this.randomNumberGeneratorForObstacle = new Random();
+            this.obstacle = new Position(randomNumberGeneratorForObstacle.Next(0, Console.WindowHeight),
+                                         randomNumberGeneratorForObstacle.Next(0, Console.WindowWidth));
         }
 
-        public Position SingleObstacle => this.singleObstacle;
+        public int ObstacleColPosition => this.obstacle.Col;
+        public int ObstacleRowPosition => this.obstacle.Row;
 
         public void PrintObstacle()
         {
-            Console.SetCursorPosition(singleObstacle.Col, singleObstacle.Row);
+            Console.SetCursorPosition(obstacle.Col, obstacle.Row);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write('X');
         }

@@ -2,13 +2,13 @@
 {
     public class SixthLevel : Level
     {
-        private const int SlowActionGameInMilliseconds = 30;
-        private const int SnakeSixthLevelLength = 10;
-        private const int ApplesTargetCount = 13;
-        private const int NegativePointsPerMissedApple = 75;
+        private const int slowActionGameInMilliseconds = 30;
+        private const int snakeSixthLevelLength = 10;
+        private const int applesTargetCount = 13;
+        private const int negativePointsPerApple = 75;
 
         public SixthLevel() : 
-            base(SlowActionGameInMilliseconds, SnakeSixthLevelLength, ApplesTargetCount, NegativePointsPerMissedApple)
+            base(slowActionGameInMilliseconds, snakeSixthLevelLength, applesTargetCount, negativePointsPerApple)
         {
         }
     }

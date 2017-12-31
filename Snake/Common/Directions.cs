@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakeGame.Common
+﻿namespace SnakeGame.Common
 {
     public enum Directions
     {
-        right = 0,
+        right = 0,        // ENUM!
         left = 1,
         down = 2,
         up = 3

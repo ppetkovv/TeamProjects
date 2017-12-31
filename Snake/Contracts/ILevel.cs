@@ -1,21 +1,19 @@
-﻿using SnakeGame.Models;
-using System.Collections.Generic;
-
-namespace SnakeGame.Contracts
+﻿namespace SnakeGame.Contracts
 {
     public interface ILevel
     {
         int SlowActionGame { get; }
         int InitialSnakeLevelLength { get; }
-        int ApplesToBeEaten { get; }
+        int ApplesTarget { get; }
         int CurrentlyEatenApples { get; set; }
-        Position ApplePosition { get; }
-        void GenerateApple();
-        //////////
+        IApple Apple { get; }
         int LastAppleCreationTime { get; }
         int NegativePointsPerMissedApple { get; }
         int AllLevelPoints { get; }
         void AddPoints();
+        void GenerateApple();
+        void GenerateObstacle();
         void CheckForAppleTimeElapsed();
+        IObstacle Obstacle { get; }
     }
 }

@@ -7,7 +7,7 @@ using SnakeGame.Contracts;
 
 namespace SnakeGame.Models
 {
-    class Apple : IApple
+    public class Apple : IApple
     {
         private Position apple;
         private Random randomNumberGenerator;
@@ -22,11 +22,17 @@ namespace SnakeGame.Models
         public int AppleColPosition => this.apple.Col;
         public int AppleRowPosition => this.apple.Row;
 
-        public void Print()
+        public void PrintApple()
         {
             Console.SetCursorPosition(apple.Col, apple.Row);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write('@');
+        }
+
+        public void EraseApple()
+        {
+            Console.SetCursorPosition(apple.Col, apple.Row);
+            Console.Write(' ');
         }
     }
 }

@@ -44,13 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConsoleSetup.cs" />
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Directions.cs" />
-    <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Points.cs" />
+    <Compile Include="Contracts\IApple.cs" />
     <Compile Include="Contracts\IConsoleSetup.cs" />
-    <Compile Include="Contracts\IPoints.cs" />
-    <Compile Include="Contracts\ISnakeEngine.cs" />
+    <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\ILevel.cs" />
+    <Compile Include="Contracts\IObstacle.cs" />
+    <Compile Include="Contracts\IPoints.cs" />
     <Compile Include="Contracts\IPosition.cs" />
     <Compile Include="Contracts\ISnake.cs" />
     <Compile Include="Engine\SnakeEngine.cs" />
@@ -62,8 +64,9 @@
     <Compile Include="Levels\SeventhLevel.cs" />
     <Compile Include="Levels\SixthLevel.cs" />
     <Compile Include="Levels\ThirdLevel.cs" />
+    <Compile Include="Models\Apple.cs" />
     <Compile Include="Models\Obstacle.cs" />
-    <Compile Include="Models\Position.cs" />
+    <Compile Include="Common\Position.cs" />
     <Compile Include="Models\Snake.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
