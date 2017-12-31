@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SnakeGame.Contracts;
+﻿using SnakeGame.Contracts;
+using System;
 
 namespace SnakeGame.Models
 {
