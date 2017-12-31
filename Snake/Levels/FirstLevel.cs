@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakeGame.Levels
+﻿namespace SnakeGame.Levels
 {
-    class FirstLevel : Level
+    public class FirstLevel : Level
     {
-        private const int NegativePointsPerApple = 50;
         private const int SlowActionGameInMilliseconds = 50;
         private const int SnakeFirstLevelLength = 5;
         private const int ApplesTargetCount = 3;
+        private const int NegativePointsPerMissedApple = 50;
 
-        public FirstLevel() : base(SlowActionGameInMilliseconds,SnakeFirstLevelLength,ApplesTargetCount,NegativePointsPerApple)
+        public FirstLevel() : 
+            base(SlowActionGameInMilliseconds, SnakeFirstLevelLength, ApplesTargetCount, NegativePointsPerMissedApple)
         {
+
         }
     }
 }

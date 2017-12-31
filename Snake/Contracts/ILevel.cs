@@ -1,8 +1,5 @@
-﻿using System;
+﻿using SnakeGame.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnakeGame.Contracts
 {
@@ -10,14 +7,15 @@ namespace SnakeGame.Contracts
     {
         int SlowActionGame { get; }
         int InitialSnakeLevelLength { get; }
-        int ApplesTarget { get; }
+        int ApplesToBeEaten { get; }
         int CurrentlyEatenApples { get; set; }
-        IApple Apple { get; }
+        Position ApplePosition { get; }
+        void GenerateApple();
+        //////////
         int LastAppleCreationTime { get; }
         int NegativePointsPerMissedApple { get; }
         int AllLevelPoints { get; }
         void AddPoints();
-        void GenerateApple();
         void CheckForAppleTimeElapsed();
     }
 }

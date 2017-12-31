@@ -1,33 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using SnakeGame.Common;
 using SnakeGame.Contracts;
-using SnakeGame.Common;
 using SnakeGame.Levels;
 using SnakeGame.Models;
+using System;
 
 namespace SnakeGame.Engine
 {
-    public sealed class SnakeEngine : IEngine
+    public sealed class SnakeEngine : ISnakeEngine // why is this sealed?
     {
-        private const int right = 0;
-        private const int left = 1;
-        private const int down = 2;
-        private const int up = 3;
-        private const int firstLevelIndex = 1;
-        private const int lastLevelIndex = 10;
-        private const int firstGameMode = 1;
-        private const int secondGameMode = 2;
-        private const int initialSecond = 5;
-        private const int finalSecond = 1;
-        private static readonly IEngine SingleInstance = new SnakeEngine();
+        private static readonly ISnakeEngine SingleInstance = new SnakeEngine();
         private static ISnake snake;
-        private static IPoints gamePoints;
-
-        public static IEngine Instance
+        
+        public static ISnakeEngine Instance
         {
             get
             {
@@ -39,13 +23,12 @@ namespace SnakeGame.Engine
         {
             ConsoleSetup.SetupConsole();
             int gameMode = this.ChooseGameMode();
-            InitializeGamePoints();
-            for (int i = firstLevelIndex; i <= lastLevelIndex; i++)
+            for (int i = 1; i <= 7; i++)
             {
                 ILevel currentLevel = LevelGenerator(i);
                 this.GameStartPreparation(i);
-                this.InitializeSnake(currentLevel);
                 currentLevel.GenerateApple();
+                this.InitializeSnake(currentLevel);
                 this.ReadCommand(gameMode, currentLevel);
             }
             Console.SetCursorPosition(0, 0);
@@ -53,12 +36,13 @@ namespace SnakeGame.Engine
 
         private int ChooseGameMode()
         {
-            Console.Write(Constants.GameMode);
+            Console.Write(GlobalConstants.GameMode);
             int gameMode;
             bool isValidGameModeChoosen = Int32.TryParse(Console.ReadLine(), out gameMode);
-            while ((!isValidGameModeChoosen) || (gameMode != firstGameMode && gameMode != secondGameMode))
+            while ((!isValidGameModeChoosen) || 
+                   (gameMode != 1 && gameMode != 2))
             {
-                Console.Write(Constants.InvalidGameMode);
+                Console.Write(GlobalConstants.InvalidGameMode);
                 isValidGameModeChoosen = Int32.TryParse(Console.ReadLine(), out gameMode);
             }
 
@@ -83,12 +67,6 @@ namespace SnakeGame.Engine
                     return new SixthLevel();
                 case 7:
                     return new SeventhLevel();
-                case 8:
-                    return new EightLevel();
-                case 9:
-                    return new NinethLevel();
-                case 10:
-                    return new TenthLevel();
                 default:
                     throw new NotImplementedException();
             }
@@ -101,12 +79,12 @@ namespace SnakeGame.Engine
             string stringOfTabulationsForLevel = new string('\t', 9);
             string stringOfTabulationsForTime = new string('\t', 7);
             Console.ForegroundColor = ConsoleColor.White;
-            for (int i = initialSecond; i >= finalSecond; i--)
+            for (int i = 5; i >= 1; i--)
             {
                 Console.Write($"{stringOfNewLines}{stringOfTabulationsForLevel}");
-                Console.WriteLine($"{Constants.GameLevel} {level}");
+                Console.WriteLine($"{GlobalConstants.GameLevel} {level}");
                 Console.Write($"\n{stringOfTabulationsForTime}");
-                Console.Write($"{Constants.GameStartPreparation} {i} sec.");
+                Console.Write($"{GlobalConstants.GameStartPreparation} {i} sec.");
                 ConsoleSetup.SlowAction(1000);
                 Console.Clear();
             }
@@ -117,23 +95,27 @@ namespace SnakeGame.Engine
             snake = new Snake(currentLevel.InitialSnakeLevelLength);
         }
 
-        private void InitializeGamePoints()
-        {
-            gamePoints = new Points();
-        }
-
         private void ReadCommand(int gameMode, ILevel currentLevel)
         {
-            //Code for safety at the beggining of each level!!!
-            //Cleaning the console buffer, because of incorrect start direction!!!
-            ConsoleSetup.CleaningTheConsoleBuffer();
-
-            int direction = right;
+            int direction = 0;
             int lastCorrectDirection = direction;
-            while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesTarget)
+            //Code for safety at the beggining of each level!!!
+            //Cleaning the console buffer!!!
+            while (Console.KeyAvailable)
             {
-                CheckingWhetherSnakeIsAlive(currentLevel);
-                currentLevel.CheckForAppleTimeElapsed();
+                Console.ReadKey(true);
+            }
+
+            Console.ReadKey();
+            while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesToBeEaten)
+            {
+                if (!snake.IsAlive)
+                {
+                    Console.SetCursorPosition(0, 0);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(GlobalConstants.GameOver);
+                    Environment.Exit(-1);
+                }
                 if (Console.KeyAvailable)
                 {
                     var currentCommand = Console.ReadKey(true);
@@ -147,15 +129,20 @@ namespace SnakeGame.Engine
                     }
                     //Checking and ignoring direction if incorrect key is pressed !!!
                     //Checking and ingnoring direction if opposite direction is choosen !!!
-                    CheckingCurrentDirection(ref direction, ref lastCorrectDirection);
-                    ////////////////////////////////////////////////////////////////////////
+                    direction = direction != -1 ? direction : lastCorrectDirection;
+                    if (((direction == (int) Directions.right || direction == (int)Directions.left) &&
+                         (lastCorrectDirection == (int)Directions.right || lastCorrectDirection == (int)Directions.left)) || 
+                        ((direction == (int)Directions.down || direction == (int)Directions.up) && 
+                         (lastCorrectDirection == (int)Directions.up || lastCorrectDirection == (int)Directions.up)))
+                    {
+                        direction = lastCorrectDirection;
+                    }
+                    lastCorrectDirection = direction;
                 }
                 ConsoleSetup.SlowAction(currentLevel.SlowActionGame);
                 this.ProcessCommand(direction, currentLevel);
             }
-            gamePoints.PositivePoints += currentLevel.AllLevelPoints;
         }
-
 
         private void ProcessCommand(int direction, ILevel curentLevel)
         {
@@ -194,30 +181,6 @@ namespace SnakeGame.Engine
                 default:
                     return -1;
             }
-        }
-
-        private static void CheckingWhetherSnakeIsAlive(ILevel currentLevel)
-        {
-            if (!snake.IsAlive)
-            {
-                gamePoints.PositivePoints += currentLevel.AllLevelPoints;
-                Console.SetCursorPosition(0, 0);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(Constants.GameOver);
-                Console.WriteLine($"Total points: {gamePoints.AllPoints}");
-                Environment.Exit(-1);
-            }
-        }
-
-        private static void CheckingCurrentDirection(ref int direction, ref int lastCorrectDirection)
-        {
-            direction = direction != -1 ? direction : lastCorrectDirection;
-            if (((direction == right || direction == left) && (lastCorrectDirection == right || lastCorrectDirection == left))
-                || ((direction == down || direction == up) && (lastCorrectDirection == down || lastCorrectDirection == up)))
-            {
-                direction = lastCorrectDirection;
-            }
-            lastCorrectDirection = direction;
         }
     }
 }

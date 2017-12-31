@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
 namespace SnakeGame.Common
 {
-    class ConsoleSetup
+    public class ConsoleSetup
     {
         public static void SetupConsole()
         {

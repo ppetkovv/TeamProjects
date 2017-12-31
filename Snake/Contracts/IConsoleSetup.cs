@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakeGame.Contracts
+﻿namespace SnakeGame.Contracts
 {
-    interface IConsoleSetup
+    public interface IConsoleSetup
     {
         void SetupConsole();
         void SlowAction(int milliseconds);
+        void CleaningTheConsoleBuffer();
     }
 }
