@@ -1,6 +1,4 @@
-﻿using SnakeGame.Engine;
-
-namespace SnakeGame
+﻿namespace SnakeGame
 {
     public class Startup
     {

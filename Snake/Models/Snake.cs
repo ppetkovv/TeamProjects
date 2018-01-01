@@ -54,8 +54,6 @@ namespace SnakeGame.Models
                 return;
             }
 
-            //this.TeleportIfNeeded(snakeNewHead);
-
             snakeElements.Enqueue(snakeNewHead);
             Console.SetCursorPosition(snakeNewHead.Col, snakeNewHead.Row);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -95,25 +93,5 @@ namespace SnakeGame.Models
             return (obstacles.Any(x => x.ObstacleRowPosition == snakeNewHead.Row && 
                                        x.ObstacleColPosition == snakeNewHead.Col));
         }
-
-        //private void TeleportIfNeeded(Position newHead)         // remove if levels wont be different
-        //{
-        //    if (newHead.Col < 0)
-        //    {
-        //        newHead.Col = Console.WindowWidth - 1;
-        //    }
-        //    else if (newHead.Col == Console.WindowWidth)
-        //    {
-        //        newHead.Col = 0;
-        //    }
-        //    else if (newHead.Row < 0)
-        //    {
-        //        newHead.Row = Console.WindowHeight - 1;
-        //    }
-        //    else if (newHead.Row == Console.WindowHeight)
-        //    {
-        //        newHead.Row = 0;
-        //    }
-        //}
     }
 }

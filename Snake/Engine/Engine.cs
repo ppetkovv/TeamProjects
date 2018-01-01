@@ -11,7 +11,7 @@ namespace SnakeGame.Engine
     public sealed class Engine : IEngine
     {
         private const int firstLevelIndex = 1;
-        private const int lastLevelIndex = 7;
+        private const int lastLevelIndex = 3;
 
         private const int firstGameMode = 1;
         private const int secondGameMode = 2;
@@ -70,14 +70,6 @@ namespace SnakeGame.Engine
                     return new SecondLevel();
                 case 3:
                     return new ThirdLevel();
-                case 4:
-                    return new FourthLevel();
-                case 5:
-                    return new FifthLevel();
-                case 6:
-                    return new SixthLevel();
-                case 7:
-                    return new SeventhLevel();
                 default:
                     throw new NotImplementedException();
             }
