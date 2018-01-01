@@ -1,6 +1,5 @@
 ﻿using SnakeGame.Contracts;
 using System;
-using SnakeGame.Engine;
 
 namespace SnakeGame.Models
 {

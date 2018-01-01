@@ -3,7 +3,6 @@ using SnakeGame.Contracts;
 using SnakeGame.Levels;
 using SnakeGame.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -13,10 +12,13 @@ namespace SnakeGame.Engine
     {
         private const int firstLevelIndex = 1;
         private const int lastLevelIndex = 7;
+
         private const int firstGameMode = 1;
         private const int secondGameMode = 2;
+
         private const int initialSecond = 5;
         private const int finalSecond = 1;
+
         private static readonly IEngine SingleInstance = new Engine();
         private static ISnake snake;
         private static IPoints gamePoints;
@@ -42,14 +44,14 @@ namespace SnakeGame.Engine
                 currentLevel.GenerateApple();
                 this.ReadCommand(gameMode, currentLevel);
             }
-            Console.SetCursorPosition(0, 0);
         }
 
         private int ChooseGameMode()
         {
             Console.Write(Constants.GameMode);
             bool isValidGameModeChoosen = Int32.TryParse(Console.ReadLine(), out int gameMode);
-            while ((!isValidGameModeChoosen) || (gameMode != firstGameMode && gameMode != secondGameMode))
+            while ((!isValidGameModeChoosen) || 
+                   (gameMode != firstGameMode && gameMode != secondGameMode))
             {
                 Console.Write(Constants.InvalidGameMode);
                 isValidGameModeChoosen = Int32.TryParse(Console.ReadLine(), out gameMode);
@@ -111,16 +113,15 @@ namespace SnakeGame.Engine
 
         private void ReadCommand(int gameMode, ILevel currentLevel)
         {
-            //Code for safety at the beggining of each level!!!
-            //Cleaning the console buffer, because of incorrect start direction!!!
             ConsoleSetup.CleaningTheConsoleBuffer();
 
             int direction = (int)Directions.right;
             int lastCorrectDirection = direction;
+
             while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesTarget)
             {
-                Borders.PrintBorders();
                 IsSnakeAlive(currentLevel);
+                Borders.PrintBorders();
                 currentLevel.CheckForAppleTimeElapsed();
                 if (Console.KeyAvailable)
                 {
@@ -136,7 +137,6 @@ namespace SnakeGame.Engine
                     //Checking and ignoring direction if incorrect key is pressed !!!
                     //Checking and ingnoring direction if opposite direction is choosen !!!
                     CheckingCurrentDirection(ref direction, ref lastCorrectDirection);
-                    ////////////////////////////////////////////////////////////////////////
                 }
                 ConsoleSetup.SlowAction(currentLevel.SlowActionGame);
                 this.ProcessCommand(direction, currentLevel, currentLevel.Obstacles);
@@ -192,12 +192,15 @@ namespace SnakeGame.Engine
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.SetCursorPosition((Console.BufferWidth / 2) - Constants.GameOver.Length, Console.BufferHeight / 2);
+                Console.SetCursorPosition((Console.BufferWidth / 2) - Constants.GameOver.Length, 
+                                           Console.BufferHeight / 2);
                 Console.WriteLine(Constants.GameOver);
                 string pointsMessage = $"Total points: {gamePoints.AllPoints}";         // make into public const string
-                Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length + 1, Console.BufferHeight / 2 + 1);
+                Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length + 1, 
+                                           Console.BufferHeight / 2 + 1);
                 Console.WriteLine(pointsMessage);
-                Console.SetCursorPosition((Console.BufferWidth / 2) - 20, Console.BufferHeight / 2 + 2);
+                Console.SetCursorPosition((Console.BufferWidth / 2) - 20, 
+                                           Console.BufferHeight / 2 + 2);
                 Environment.Exit(-1);
             }
         }
@@ -206,8 +209,8 @@ namespace SnakeGame.Engine
         {
             direction = direction != -1 ? direction : lastCorrectDirection;
             if (((direction == (int)Directions.right || direction == (int)Directions.left) &&
-                 (lastCorrectDirection == (int)Directions.right || lastCorrectDirection == (int)Directions.left))
-                || ((direction == (int)Directions.down || direction == (int)Directions.up) && 
+                 (lastCorrectDirection == (int)Directions.right || lastCorrectDirection == (int)Directions.left)) || 
+                ((direction == (int)Directions.down || direction == (int)Directions.up) && 
                 (lastCorrectDirection == (int)Directions.down || lastCorrectDirection == (int)Directions.up)))
             {
                 direction = lastCorrectDirection;

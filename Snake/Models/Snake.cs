@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using SnakeGame.Levels;
 
 namespace SnakeGame.Models
 {
@@ -38,6 +37,7 @@ namespace SnakeGame.Models
             Position nextDirection = directions[direction];
             Position snakeNewHead = new Position(snakeHead.Row + nextDirection.Row,
                                                  snakeHead.Col + nextDirection.Col);
+
             this.isAlive = !this.SnakeBitesItself(snakeNewHead);
             if (!this.IsAlive)
             {
@@ -53,12 +53,16 @@ namespace SnakeGame.Models
             {  
                 return;
             }
-            this.TeleportIfNeeded(snakeNewHead);
+
+            //this.TeleportIfNeeded(snakeNewHead);
+
             snakeElements.Enqueue(snakeNewHead);
             Console.SetCursorPosition(snakeNewHead.Col, snakeNewHead.Row);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write('*');
-            if (snakeNewHead.Col == currentLevel.Apple.AppleColPosition && snakeNewHead.Row == currentLevel.Apple.AppleRowPosition)
+
+            if (snakeNewHead.Col == currentLevel.Apple.AppleColPosition && 
+                snakeNewHead.Row == currentLevel.Apple.AppleRowPosition)
             {
                 currentLevel.GenerateApple();
                 currentLevel.CurrentlyEatenApples += 1;
@@ -73,41 +77,43 @@ namespace SnakeGame.Models
                 Console.Write(' ');
             }
         }
-         
+
         public bool SnakeBitesItself(Position snakeNewHead)
         {
-            return (this.snakeElements.Any(elem => elem.Row == snakeNewHead.Row && elem.Col == snakeNewHead.Col));
+            return (this.snakeElements.Any(elem => elem.Row == snakeNewHead.Row && 
+                                                   elem.Col == snakeNewHead.Col));
         }
 
         public bool SnakeHitsBorder(Position snakeNewHead)
         {
             return (snakeNewHead.Row == 1 || snakeNewHead.Row == Console.WindowHeight - 2 ||
-                snakeNewHead.Col == 1 || snakeNewHead.Col == Console.WindowWidth - 2);
+                    snakeNewHead.Col == 1 || snakeNewHead.Col == Console.WindowWidth - 2);
         }
 
         public bool SnakeHitsObstacle(IPosition snakeNewHead, IList<IObstacle> obstacles)
         {
-            return (obstacles.Any(x => x.ObstacleRowPosition == snakeNewHead.Row && x.ObstacleColPosition == snakeNewHead.Col));
+            return (obstacles.Any(x => x.ObstacleRowPosition == snakeNewHead.Row && 
+                                       x.ObstacleColPosition == snakeNewHead.Col));
         }
 
-        private void TeleportIfNeeded(Position newHead)
-        {
-            if (newHead.Col < 0)
-            {
-                newHead.Col = Console.WindowWidth - 1;
-            }
-            else if (newHead.Col == Console.WindowWidth)
-            {
-                newHead.Col = 0;
-            }
-            else if (newHead.Row < 0)
-            {
-                newHead.Row = Console.WindowHeight - 1;
-            }
-            else if (newHead.Row == Console.WindowHeight)
-            {
-                newHead.Row = 0;
-            }
-        }
+        //private void TeleportIfNeeded(Position newHead)         // remove if levels wont be different
+        //{
+        //    if (newHead.Col < 0)
+        //    {
+        //        newHead.Col = Console.WindowWidth - 1;
+        //    }
+        //    else if (newHead.Col == Console.WindowWidth)
+        //    {
+        //        newHead.Col = 0;
+        //    }
+        //    else if (newHead.Row < 0)
+        //    {
+        //        newHead.Row = Console.WindowHeight - 1;
+        //    }
+        //    else if (newHead.Row == Console.WindowHeight)
+        //    {
+        //        newHead.Row = 0;
+        //    }
+        //}
     }
 }

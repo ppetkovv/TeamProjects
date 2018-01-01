@@ -5,17 +5,21 @@ namespace SnakeGame.Contracts
     public interface ILevel
     {
         int SlowActionGame { get; }
+
         int InitialSnakeLevelLength { get; }
+
+        IApple Apple { get; }
+        void GenerateApple();
         int ApplesTarget { get; }
         int CurrentlyEatenApples { get; set; }
-        IApple Apple { get; }
+        void CheckForAppleTimeElapsed();
         int LastAppleCreationTime { get; }
-        int NegativePointsPerMissedApple { get; }
+        
         int AllLevelPoints { get; }
         void AddPoints();
-        void GenerateApple();
+        int NegativePointsPerMissedApple { get; }
+
         void GenerateObstacle();
-        void CheckForAppleTimeElapsed();
         IList<IObstacle> Obstacles { get; }
     }
 }

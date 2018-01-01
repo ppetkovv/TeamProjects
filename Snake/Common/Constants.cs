@@ -1,6 +1,4 @@
-﻿using SnakeGame.Engine;
-
-namespace SnakeGame.Common
+﻿namespace SnakeGame.Common
 {
     public static class Constants
     {
@@ -10,7 +8,6 @@ namespace SnakeGame.Common
         public const string InvalidApplesState = "Cannot eat more than one apple!"; /// WHEN COULD WE ENCOUNTER THIS?
         public const string GameLevel = "LEVEL";
         public const string GameStartPreparation = "The game will start in: ";
-        public const string GameLevelCompleted = "Level Completed !!!";         // IMPLEMENT OR DISCARD
         public const string GameMode = @"Please choose from one of the game modes:
                                             Press 1 for   W     OR 2 for        UP
                                                         A S D             LEFT DOWN RIGHT

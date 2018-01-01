@@ -6,10 +6,12 @@ namespace SnakeGame.Contracts
     public interface ISnake
     {
         Queue<Position> SnakeElements { get; }
-        bool IsAlive { get; }
+        
         void Move(int direction, ILevel currentLevel, IList<IObstacle> Obstacles);
+
         bool SnakeBitesItself(Position snakeNewHead);
         bool SnakeHitsBorder(Position snakeNewHead);
-        //void Print();
+        bool SnakeHitsObstacle(IPosition snakeNewHead, IList<IObstacle> obstacles);
+        bool IsAlive { get; }
     }
 }
