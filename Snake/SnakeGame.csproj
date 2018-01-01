@@ -55,7 +55,7 @@
     <Compile Include="Contracts\IPoints.cs" />
     <Compile Include="Contracts\IPosition.cs" />
     <Compile Include="Contracts\ISnake.cs" />
-    <Compile Include="Engine\SnakeEngine.cs" />
+    <Compile Include="Engine\Engine.cs" />
     <Compile Include="Levels\FifthLevel.cs" />
     <Compile Include="Levels\FirstLevel.cs" />
     <Compile Include="Levels\FourthLevel.cs" />

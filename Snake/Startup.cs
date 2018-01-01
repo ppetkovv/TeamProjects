@@ -6,7 +6,7 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            SnakeEngine.Instance.Start();
+            Engine.Engine.Instance.Start();
         }
     }
 }

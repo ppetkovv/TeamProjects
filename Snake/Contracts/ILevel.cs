@@ -1,4 +1,6 @@
-﻿namespace SnakeGame.Contracts
+﻿using System.Collections.Generic;
+
+namespace SnakeGame.Contracts
 {
     public interface ILevel
     {
@@ -14,6 +16,6 @@
         void GenerateApple();
         void GenerateObstacle();
         void CheckForAppleTimeElapsed();
-        IObstacle Obstacle { get; }
+        IList<IObstacle> Obstacles { get; }
     }
 }

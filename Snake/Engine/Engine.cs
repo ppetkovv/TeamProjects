@@ -3,11 +3,13 @@ using SnakeGame.Contracts;
 using SnakeGame.Levels;
 using SnakeGame.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace SnakeGame.Engine
 {
-    public sealed class SnakeEngine : IEngine
+    public sealed class Engine : IEngine
     {
         private const int firstLevelIndex = 1;
         private const int lastLevelIndex = 7;
@@ -15,7 +17,7 @@ namespace SnakeGame.Engine
         private const int secondGameMode = 2;
         private const int initialSecond = 5;
         private const int finalSecond = 1;
-        private static readonly IEngine SingleInstance = new SnakeEngine();
+        private static readonly IEngine SingleInstance = new Engine();
         private static ISnake snake;
         private static IPoints gamePoints;
 
@@ -137,15 +139,15 @@ namespace SnakeGame.Engine
                     ////////////////////////////////////////////////////////////////////////
                 }
                 ConsoleSetup.SlowAction(currentLevel.SlowActionGame);
-                this.ProcessCommand(direction, currentLevel);
+                this.ProcessCommand(direction, currentLevel, currentLevel.Obstacles);
             }
             gamePoints.PositivePoints += currentLevel.AllLevelPoints;
         }
 
 
-        private void ProcessCommand(int direction, ILevel curentLevel)
+        private void ProcessCommand(int direction, ILevel curentLevel, IList<IObstacle> obstacles)
         {
-            snake.Move(direction, curentLevel);
+            snake.Move(direction, curentLevel, obstacles);
         }
 
         private int GameModeOneKeyParser(ConsoleKeyInfo currentCommand)
@@ -193,7 +195,7 @@ namespace SnakeGame.Engine
                 Console.SetCursorPosition((Console.BufferWidth / 2) - Constants.GameOver.Length, Console.BufferHeight / 2);
                 Console.WriteLine(Constants.GameOver);
                 string pointsMessage = $"Total points: {gamePoints.AllPoints}";         // make into public const string
-                Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length, Console.BufferHeight / 2 + 1);
+                Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length + 1, Console.BufferHeight / 2 + 1);
                 Console.WriteLine(pointsMessage);
                 Console.SetCursorPosition((Console.BufferWidth / 2) - 20, Console.BufferHeight / 2 + 2);
                 Environment.Exit(-1);

@@ -2,6 +2,7 @@
 using SnakeGame.Contracts;
 using SnakeGame.Models;
 using System;
+using System.Collections.Generic;
 
 namespace SnakeGame.Levels
 {
@@ -13,10 +14,10 @@ namespace SnakeGame.Levels
         private int applesTarget;
         private int currentlyEatenApples;
         private IApple apple;
-        private IObstacle obstacle;
         private IPoints levelPoints;
         private int lastAppleCreationTime = 0;
         private int negativePointsPerMissedApple;
+        private IList<IObstacle> obstacles;
 
         protected Level(int slowActionGame, int snakeLevelLength, int applesTarget, int negativePointsPerMissedApple)
         {
@@ -25,6 +26,7 @@ namespace SnakeGame.Levels
             this.ApplesTarget = applesTarget;
             this.NegativePointsPerMissedApple = negativePointsPerMissedApple;
             this.levelPoints = new Points(snakeLevelLength);
+            this.obstacles = new List<IObstacle>();
         }
 
         public int SlowActionGame { get => this.slowActionGame; private set => this.slowActionGame = value; }
@@ -32,7 +34,7 @@ namespace SnakeGame.Levels
         public int ApplesTarget { get => this.applesTarget; private set => this.applesTarget = value; }
         public int CurrentlyEatenApples { get => this.currentlyEatenApples; set { if (value != this.currentlyEatenApples + 1) { throw new ArgumentException(Constants.InvalidApplesState); } this.currentlyEatenApples = value; } }
         public IApple Apple { get => this.apple; }
-        public IObstacle Obstacle { get => this.obstacle; }
+        //public IObstacle Obstacle { get => this.obstacle; }
         public int LastAppleCreationTime { get => this.lastAppleCreationTime; private set => this.lastAppleCreationTime = value; }
         public int NegativePointsPerMissedApple { get => this.negativePointsPerMissedApple; private set => this.negativePointsPerMissedApple = value; }
         public int AllLevelPoints => this.levelPoints.AllPoints;
@@ -47,13 +49,15 @@ namespace SnakeGame.Levels
             this.apple = new Apple();
             this.apple.PrintApple();
             this.LastAppleCreationTime = Environment.TickCount;
-            
         }
+
+        public IList<IObstacle> Obstacles => this.obstacles;
 
         public void GenerateObstacle()
         {
-            this.obstacle = new Obstacle();
-            this.obstacle.PrintObstacle();
+            Obstacle obstacle = new Obstacle();
+            Obstacles.Add(obstacle);
+            obstacle.PrintObstacle();
         }
 
         public void CheckForAppleTimeElapsed()
