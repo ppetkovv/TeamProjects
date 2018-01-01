@@ -11,8 +11,8 @@ namespace SnakeGame.Models
         public Obstacle()
         {
             this.randomNumberGeneratorForObstacle = new Random();
-            this.obstacle = new Position(randomNumberGeneratorForObstacle.Next(0, Console.WindowHeight),
-                                         randomNumberGeneratorForObstacle.Next(0, Console.WindowWidth));
+            this.obstacle = new Position(randomNumberGeneratorForObstacle.Next(2, Console.WindowHeight - 3),
+                                         randomNumberGeneratorForObstacle.Next(2, Console.WindowWidth - 3));
         }
 
         public int ObstacleColPosition => this.obstacle.Col;

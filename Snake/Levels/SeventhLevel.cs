@@ -5,10 +5,10 @@
         private const int slowActionGameInMilliseconds = 30;
         private const int snakeSeventhLevelLength = 11;
         private const int applesTargetCount = 15;
-        private const int negativePointsPerApple = 80;
+        private const int negativePointsPerMissedApple = 80;
 
         public SeventhLevel() : 
-            base(slowActionGameInMilliseconds, snakeSeventhLevelLength, applesTargetCount, negativePointsPerApple)
+            base(slowActionGameInMilliseconds, snakeSeventhLevelLength, applesTargetCount, negativePointsPerMissedApple)
         {
         }
     }

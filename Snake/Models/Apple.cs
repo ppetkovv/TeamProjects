@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SnakeGame.Contracts;
+﻿using SnakeGame.Contracts;
+using System;
 
 namespace SnakeGame.Models
 {
     public class Apple : IApple
     {
         private Position apple;
-        private Random randomNumberGenerator;
+        private Random randomNumberGeneratorForApple;
 
         public Apple()
         {
-            this.randomNumberGenerator = new Random();
-            this.apple = new Position(randomNumberGenerator.Next(0, Console.WindowHeight),
-                                         randomNumberGenerator.Next(0, Console.WindowWidth));
+            this.randomNumberGeneratorForApple = new Random();
+            this.apple = new Position(randomNumberGeneratorForApple.Next(2, Console.WindowHeight - 3),
+                                         randomNumberGeneratorForApple.Next(2, Console.WindowWidth - 3));
         }
 
         public int AppleColPosition => this.apple.Col;

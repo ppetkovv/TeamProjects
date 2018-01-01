@@ -3,6 +3,7 @@ using SnakeGame.Contracts;
 using SnakeGame.Levels;
 using SnakeGame.Models;
 using System;
+using System.Threading;
 
 namespace SnakeGame.Engine
 {
@@ -116,6 +117,7 @@ namespace SnakeGame.Engine
             int lastCorrectDirection = direction;
             while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesTarget)
             {
+                Borders.PrintBorders();
                 IsSnakeAlive(currentLevel);
                 currentLevel.CheckForAppleTimeElapsed();
                 if (Console.KeyAvailable)
@@ -184,11 +186,16 @@ namespace SnakeGame.Engine
         {
             if (!snake.IsAlive)
             {
-                gamePoints.PositivePoints += currentLevel.AllLevelPoints;
+                Thread.Sleep(500);
+                Console.Clear();
                 Console.SetCursorPosition(0, 0);
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.SetCursorPosition((Console.BufferWidth / 2) - Constants.GameOver.Length, Console.BufferHeight / 2);
                 Console.WriteLine(Constants.GameOver);
-                Console.WriteLine($"Total points: {gamePoints.AllPoints}"); // why doesnt this print?
+                string pointsMessage = $"Total points: {gamePoints.AllPoints}";         // make into public const string
+                Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length, Console.BufferHeight / 2 + 1);
+                Console.WriteLine(pointsMessage);
+                Console.SetCursorPosition((Console.BufferWidth / 2) - 20, Console.BufferHeight / 2 + 2);
                 Environment.Exit(-1);
             }
         }

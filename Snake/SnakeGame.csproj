@@ -65,6 +65,7 @@
     <Compile Include="Levels\SixthLevel.cs" />
     <Compile Include="Levels\ThirdLevel.cs" />
     <Compile Include="Models\Apple.cs" />
+    <Compile Include="Models\Borders.cs" />
     <Compile Include="Models\Obstacle.cs" />
     <Compile Include="Common\Position.cs" />
     <Compile Include="Models\Snake.cs" />

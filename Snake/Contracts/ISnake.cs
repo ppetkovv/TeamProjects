@@ -8,7 +8,8 @@ namespace SnakeGame.Contracts
         Queue<Position> SnakeElements { get; }
         bool IsAlive { get; }
         void Move(int direction, ILevel currentLevel);
-        void DoesSnakeBiteItself(Position snakeNewHead);
+        void SnakeBitesItself(Position snakeNewHead);
+        void SnakeHitsBorder(Position snakeNewHead);
         //void Print();
     }
 }

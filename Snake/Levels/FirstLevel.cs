@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakeGame.Levels
+﻿namespace SnakeGame.Levels
 {
     public class FirstLevel : Level
     {
@@ -17,5 +11,7 @@ namespace SnakeGame.Levels
             base(slowActionGameInMilliseconds, snakeFirstLevelLength, applesTargetCount, negativePointsPerMissedApple)
         {
         }
+
+
     }
 }

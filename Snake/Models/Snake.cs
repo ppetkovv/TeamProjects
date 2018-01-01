@@ -9,24 +9,23 @@ namespace SnakeGame.Models
     public class Snake : ISnake
     {
         private static Position[] directions = new Position[]
-             {
+        {
                new Position(0,1),  //right
                new Position(0, -1), //left
                new Position(1,0), //down
                new Position(-1,0) //top
-           };
+        };
 
         private Queue<Position> snakeElements;
-        private bool isAlive;
+        private bool isAlive = true;
 
         public Snake(int length)
         {
             this.snakeElements = new Queue<Position>(length);
-            for (int i = 0; i < length; i++)
+            for (int i = 5; i < length + 5; i++)
             {
-                snakeElements.Enqueue(new Position(0, i));
+                snakeElements.Enqueue(new Position((Console.WindowHeight / 2), i));
             }
-            this.isAlive = true;
         }
 
         public Queue<Position> SnakeElements { get => this.snakeElements; }
@@ -38,12 +37,13 @@ namespace SnakeGame.Models
             Position nextDirection = directions[direction];
             Position snakeNewHead = new Position(snakeHead.Row + nextDirection.Row,
                                                  snakeHead.Col + nextDirection.Col);
-            this.DoesSnakeBiteItself(snakeNewHead);
+            this.SnakeBitesItself(snakeNewHead);
+            this.SnakeHitsBorder(snakeNewHead);
             if (!this.IsAlive)
-            {
-                return;         // WHY?
+            {  
+                return;// WHY?
             }
-            this.TeleportIfIsNeeded(snakeNewHead);
+            this.TeleportIfNeeded(snakeNewHead);
             snakeElements.Enqueue(snakeNewHead);
             Console.SetCursorPosition(snakeNewHead.Col, snakeNewHead.Row);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -53,7 +53,7 @@ namespace SnakeGame.Models
                 currentLevel.GenerateApple();
                 currentLevel.CurrentlyEatenApples += 1;
                 currentLevel.AddPoints();
-                Thread.Sleep(13);
+                Thread.Sleep(19);
                 currentLevel.GenerateObstacle();
             }
             else
@@ -76,15 +76,57 @@ namespace SnakeGame.Models
         //    }
         //}
 
-        public void DoesSnakeBiteItself(Position newHead)
+        //public bool SnakeBitesItself(Position newHead)
+        //{
+        //    if(this.snakeElements.Any(elem=>elem.Row==newHead.Row&&elem.Col==newHead.Col))
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        //public bool SnakeHitsWall(Position newHead)
+        //{
+        //    if (newHead.Row == 1 || newHead.Row == Console.WindowWidth - 2)
+        //    {
+        //        return true;
+        //    }
+        //    else if (this.snakeElements.Any(elem => elem.Col == 1 || elem.Col == Console.WindowHeight - 2))
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+         
+        public void SnakeBitesItself(Position snakeNewHead)
         {
-            if(this.snakeElements.Any(elem=>elem.Row==newHead.Row&&elem.Col==newHead.Col))
+            if (this.snakeElements.Any(elem => elem.Row == snakeNewHead.Row && elem.Col == snakeNewHead.Col))
             {
                 this.isAlive = false;
             }
+            else
+            {
+                this.isAlive = true;
+            }
         }
 
-        private void TeleportIfIsNeeded(Position newHead)
+        public void SnakeHitsBorder(Position snakeNewHead)
+        {
+            if (snakeNewHead.Row == 1 || snakeNewHead.Row == Console.WindowHeight - 2)
+            {
+                this.isAlive = false;
+            }
+            else if (snakeNewHead.Col == 1 || snakeNewHead.Col == Console.WindowWidth - 2)
+            {
+                this.isAlive = false;
+            }
+            else
+            {
+                this.isAlive = true;
+            }
+        }
+
+        private void TeleportIfNeeded(Position newHead)
         {
             if (newHead.Col < 0)
             {

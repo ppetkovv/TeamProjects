@@ -2,7 +2,6 @@
 using SnakeGame.Contracts;
 using SnakeGame.Models;
 using System;
-using System.Threading;
 
 namespace SnakeGame.Levels
 {
@@ -37,7 +36,7 @@ namespace SnakeGame.Levels
         public int LastAppleCreationTime { get => this.lastAppleCreationTime; private set => this.lastAppleCreationTime = value; }
         public int NegativePointsPerMissedApple { get => this.negativePointsPerMissedApple; private set => this.negativePointsPerMissedApple = value; }
         public int AllLevelPoints => this.levelPoints.AllPoints;
-
+        
         public void GenerateApple()
         {
             if (this.Apple != null)
