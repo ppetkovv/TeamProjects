@@ -11,7 +11,5 @@
             base(slowActionGameInMilliseconds, snakeFirstLevelLength, applesTargetCount, negativePointsPerMissedApple)
         {
         }
-
-
     }
 }

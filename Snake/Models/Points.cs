@@ -1,6 +1,6 @@
 ﻿using SnakeGame.Contracts;
 
-namespace SnakeGame.Common
+namespace SnakeGame.Models
 {
     public class Points : IPoints
     {
@@ -8,7 +8,7 @@ namespace SnakeGame.Common
         private int negativePoints;
         private int snakeInitialLength;
 
-        public Points(){ }
+        public Points() { }
 
         public Points(int snakeInitialLength)
         {
@@ -17,7 +17,7 @@ namespace SnakeGame.Common
 
         public int PositivePoints { get => this.positivePoints; set => this.positivePoints = value; }
         public int NegativePoints { get => this.negativePoints; set => this.negativePoints = value; }
-        
+
         public int AllPoints
         {
             get => this.positivePoints - this.negativePoints < 0 ? 0 : this.positivePoints - this.negativePoints;

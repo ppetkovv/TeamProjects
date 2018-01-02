@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SnakeGame.Models
+namespace SnakeGame.Common
 {
     public static class Borders
     {

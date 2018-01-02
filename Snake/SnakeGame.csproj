@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Borders.cs" />
     <Compile Include="Common\ConsoleSetup.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Directions.cs" />
-    <Compile Include="Common\Points.cs" />
     <Compile Include="Contracts\IApple.cs" />
     <Compile Include="Contracts\IConsoleSetup.cs" />
     <Compile Include="Contracts\IEngine.cs" />
@@ -61,16 +61,15 @@
     <Compile Include="Levels\SecondLevel.cs" />
     <Compile Include="Levels\ThirdLevel.cs" />
     <Compile Include="Models\Apple.cs" />
-    <Compile Include="Models\Borders.cs" />
     <Compile Include="Models\Obstacle.cs" />
-    <Compile Include="Common\Position.cs" />
+    <Compile Include="Models\Points.cs" />
+    <Compile Include="Models\Position.cs" />
     <Compile Include="Models\Snake.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
