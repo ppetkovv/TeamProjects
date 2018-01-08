@@ -59,7 +59,7 @@ namespace SnakeGame.Models
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write('*');
 
-            if (snakeNewHead.Col == currentLevel.Apple.AppleColPosition && 
+            if (snakeNewHead.Col == currentLevel.Apple.AppleColPosition &&
                 snakeNewHead.Row == currentLevel.Apple.AppleRowPosition)
             {
                 currentLevel.GenerateApple();

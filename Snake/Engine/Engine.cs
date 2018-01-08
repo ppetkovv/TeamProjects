@@ -180,7 +180,6 @@ namespace SnakeGame.Engine
         {
             if (!snake.IsAlive)
             {
-                Thread.Sleep(500);
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Console.ForegroundColor = ConsoleColor.Magenta;
