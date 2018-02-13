@@ -1,9 +1,7 @@
 ﻿namespace SnakeGame.Contracts
 {
-    public interface IObstacle
+    public interface IObstacle : IPosition
     {
-        int ObstacleRowPosition { get; }
-        int ObstacleColPosition { get; }
         void PrintObstacle();
     }
 }

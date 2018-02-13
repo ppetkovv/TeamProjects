@@ -1,5 +1,6 @@
 ﻿using SnakeGame.Common;
 using SnakeGame.Contracts;
+using SnakeGame.IO.Contracts;
 using SnakeGame.Levels;
 using SnakeGame.Models;
 using System;
@@ -8,7 +9,7 @@ using System.Threading;
 
 namespace SnakeGame.Engine
 {
-    public sealed class Engine : IEngine
+    public sealed class GameEngine : IEngine
     {
         private const int firstLevelIndex = 1;
         private const int lastLevelIndex = 3;
@@ -19,23 +20,22 @@ namespace SnakeGame.Engine
         private const int initialSecond = 5;
         private const int finalSecond = 1;
 
-        private static readonly IEngine SingleInstance = new Engine();
         private static ISnake snake;
         private static IPoints gamePoints;
 
-        public static IEngine Instance
+        private IReader reader;
+        private IWriter writer;
+
+        public GameEngine(IReader reader, IWriter writer)
         {
-            get
-            {
-                return SingleInstance;
-            }
+            this.reader = reader;
+            this.writer = writer;
         }
 
         public void Start()
         {
             ConsoleSetup.SetupConsole();
             int gameMode = this.ChooseGameMode();
-            InitializeGamePoints();
             for (int i = firstLevelIndex; i <= lastLevelIndex; i++)
             {
                 ILevel currentLevel = LevelGenerator(i);
@@ -98,17 +98,12 @@ namespace SnakeGame.Engine
             snake = new Snake(currentLevel.InitialSnakeLevelLength);
         }
 
-        private void InitializeGamePoints()
-        {
-            gamePoints = new Points();
-        }
-
         private void ReadCommand(int gameMode, ILevel currentLevel)
         {
             ConsoleSetup.CleaningTheConsoleBuffer();
 
-            int direction = (int)Directions.right;
-            int lastCorrectDirection = direction;
+            string direction = "right";
+            string lastCorrectDirection = direction;
 
             while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesTarget)
             {
@@ -137,42 +132,42 @@ namespace SnakeGame.Engine
         }
 
 
-        private void ProcessCommand(int direction, ILevel curentLevel, IList<IObstacle> obstacles)
+        private void ProcessCommand(string direction, ILevel curentLevel, IList<IObstacle> obstacles)
         {
             snake.Move(direction, curentLevel, obstacles);
         }
 
-        private int GameModeOneKeyParser(ConsoleKeyInfo currentCommand)
+        private string GameModeOneKeyParser(ConsoleKeyInfo currentCommand)
         {
             switch (currentCommand.Key)
             {
                 case ConsoleKey.W:
-                    return 3;
+                    return "up";
                 case ConsoleKey.S:
-                    return 2;
+                    return "down";
                 case ConsoleKey.A:
-                    return 1;
+                    return "left";
                 case ConsoleKey.D:
-                    return 0;
+                    return "right";
                 default:
-                    return -1;
+                    return "Vari na mainata si";
             }
         }
 
-        private int GameModeTwoKeyParser(ConsoleKeyInfo currentCommand)
+        private string GameModeTwoKeyParser(ConsoleKeyInfo currentCommand)
         {
             switch (currentCommand.Key)
             {
                 case ConsoleKey.UpArrow:
-                    return 3;
+                    return "up";
                 case ConsoleKey.DownArrow:
-                    return 2;
+                    return "down";
                 case ConsoleKey.LeftArrow:
-                    return 1;
+                    return "left";
                 case ConsoleKey.RightArrow:
-                    return 0;
+                    return "right";
                 default:
-                    return -1;
+                    return "Vari na mainata si";
             }
         }
 
@@ -196,13 +191,14 @@ namespace SnakeGame.Engine
             }
         }
 
-        private static void CheckingCurrentDirection(ref int direction, ref int lastCorrectDirection)
+        private static void CheckingCurrentDirection(ref string direction, ref string lastCorrectDirection)
         {
-            direction = direction != -1 ? direction : lastCorrectDirection;
-            if (((direction == (int)Directions.right || direction == (int)Directions.left) &&
-                 (lastCorrectDirection == (int)Directions.right || lastCorrectDirection == (int)Directions.left)) || 
-                ((direction == (int)Directions.down || direction == (int)Directions.up) && 
-                (lastCorrectDirection == (int)Directions.down || lastCorrectDirection == (int)Directions.up)))
+
+            direction = direction != "Vari na mainata si" ? direction : lastCorrectDirection;
+            if (((direction == "right" || direction == "left") &&
+                 (lastCorrectDirection == "right" || lastCorrectDirection == "left")) ||
+                ((direction == "down" || direction == "up") &&
+                (lastCorrectDirection == "down" || lastCorrectDirection == "up")))
             {
                 direction = lastCorrectDirection;
             }

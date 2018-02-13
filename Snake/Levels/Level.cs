@@ -29,27 +29,15 @@ namespace SnakeGame.Levels
             this.obstacles = new List<IObstacle>();
         }
 
-        public int SlowActionGame
-        {
-            get => this.slowActionGame;
-            private set => this.slowActionGame = value;
-        }
-
-        public int InitialSnakeLevelLength
-        {
-            get => this.initialSnakeLevelLength;
-            private set => this.initialSnakeLevelLength = value;
-        }
-
-        public int ApplesTarget
-        {
-            get => this.applesTarget;
-            private set => this.applesTarget = value;
-        }
-
-        public int CurrentlyEatenApples
-        {
-            get => this.currentlyEatenApples;
+        public int SlowActionGame { get => this.slowActionGame; private set => this.slowActionGame = value; }
+        public int InitialSnakeLevelLength { get => this.initialSnakeLevelLength;  private set => this.initialSnakeLevelLength = value;}
+        public IApple Apple { get => this.apple;}
+        public int ApplesTarget {get => this.applesTarget; private set => this.applesTarget = value; }
+        public int LastAppleCreationTime { get => this.lastAppleCreationTime; private set => this.lastAppleCreationTime = value;}
+        public int NegativePointsPerMissedApple { get => this.negativePointsPerMissedApple; private set => this.negativePointsPerMissedApple = value;}
+        public int AllLevelPoints => this.levelPoints.AllPoints;
+        public IList<IObstacle> Obstacles => this.obstacles;
+        public int CurrentlyEatenApples { get => this.currentlyEatenApples;
             set
             {
                 if (value != this.currentlyEatenApples + 1)
@@ -60,41 +48,32 @@ namespace SnakeGame.Levels
             }
         }
 
-        public IApple Apple
+        private IPosition GenerateRandomPosition()
         {
-            get => this.apple;
+            Random row = new Random();
+            Random col = new Random();
+
+            var randomPosition = new Position(row.Next(2, Console.WindowHeight - 3),
+                                              col.Next(2, Console.WindowWidth - 3));
+            return randomPosition;
         }
 
-        public int LastAppleCreationTime
-        {
-            get => this.lastAppleCreationTime;
-            private set => this.lastAppleCreationTime = value;
-        }
-
-        public int NegativePointsPerMissedApple
-        {
-            get => this.negativePointsPerMissedApple;
-            private set => this.negativePointsPerMissedApple = value;
-        }
-
-        public int AllLevelPoints => this.levelPoints.AllPoints;
-        
         public void GenerateApple()
         {
             if (this.Apple != null)
             {
                 Apple.EraseApple();
             }
-            this.apple = new Apple();
+            IPosition newAppleCoordinates = this.GenerateRandomPosition();
+            this.apple = new Apple(newAppleCoordinates.Row, newAppleCoordinates.Col);
             this.apple.PrintApple();
             this.LastAppleCreationTime = Environment.TickCount;
         }
 
-        public IList<IObstacle> Obstacles => this.obstacles;
-
         public void GenerateObstacle()
         {
-            Obstacle obstacle = new Obstacle();
+            IPosition newObstacleCoordinates = this.GenerateRandomPosition();
+            Obstacle obstacle = new Obstacle(newObstacleCoordinates.Row, newObstacleCoordinates.Col);
             Obstacles.Add(obstacle);
             obstacle.PrintObstacle();
         }

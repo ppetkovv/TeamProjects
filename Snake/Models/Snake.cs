@@ -1,4 +1,5 @@
-﻿using SnakeGame.Contracts;
+﻿using SnakeGame.Common;
+using SnakeGame.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,34 +9,27 @@ namespace SnakeGame.Models
 {
     public class Snake : ISnake
     {
-        private static Position[] directions = new Position[]
-        {
-               new Position(0,1),  //right
-               new Position(0, -1), //left
-               new Position(1,0), //down
-               new Position(-1,0) //top
-        };
-
-        private Queue<Position> snakeElements;
-        private bool isAlive = true;
+        private Queue<IPosition> snakeElements;
+        private bool isAlive;
 
         public Snake(int length)
         {
-            this.snakeElements = new Queue<Position>(length);
+            this.isAlive = true;
+            this.snakeElements = new Queue<IPosition>(length);
             for (int i = 5; i < length + 5; i++)
             {
                 snakeElements.Enqueue(new Position((Console.WindowHeight / 2), i));
             }
         }
 
-        public Queue<Position> SnakeElements { get => this.snakeElements; }
+        public Queue<IPosition> SnakeElements { get => this.snakeElements; }
         public bool IsAlive { get => this.isAlive; private set => this.isAlive = value; }
 
-        public void Move(int direction, ILevel currentLevel, IList<IObstacle> Obstacles)
+        public void Move(string direction, ILevel currentLevel, IList<IObstacle> Obstacles)
         {
-            Position snakeHead = snakeElements.Last();
-            Position nextDirection = directions[direction];
-            Position snakeNewHead = new Position(snakeHead.Row + nextDirection.Row,
+            IPosition snakeHead = snakeElements.Last();
+            IPosition nextDirection = Constants.positionsByIndex[direction];
+            IPosition snakeNewHead = new Position(snakeHead.Row + nextDirection.Row,
                                                  snakeHead.Col + nextDirection.Col);
 
             this.isAlive = !this.SnakeBitesItself(snakeNewHead);
@@ -43,14 +37,16 @@ namespace SnakeGame.Models
             {
                 return;
             }
+
             this.isAlive = !this.SnakeHitsBorder(snakeNewHead);
             if (!this.IsAlive)
             {
                 return;
             }
+
             this.isAlive = !this.SnakeHitsObstacle(snakeNewHead, Obstacles);
             if (!this.IsAlive)
-            {  
+            {
                 return;
             }
 
@@ -59,8 +55,8 @@ namespace SnakeGame.Models
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write('*');
 
-            if (snakeNewHead.Col == currentLevel.Apple.AppleColPosition &&
-                snakeNewHead.Row == currentLevel.Apple.AppleRowPosition)
+            if (snakeNewHead.Col == currentLevel.Apple.Col &&
+                snakeNewHead.Row == currentLevel.Apple.Row)
             {
                 currentLevel.GenerateApple();
                 currentLevel.CurrentlyEatenApples += 1;
@@ -70,28 +66,28 @@ namespace SnakeGame.Models
             }
             else
             {
-                Position tail = snakeElements.Dequeue();
+                IPosition tail = snakeElements.Dequeue();
                 Console.SetCursorPosition(tail.Col, tail.Row);
                 Console.Write(' ');
             }
         }
 
-        public bool SnakeBitesItself(Position snakeNewHead)
+        private bool SnakeBitesItself(IPosition snakeNewHead)
         {
-            return (this.snakeElements.Any(elem => elem.Row == snakeNewHead.Row && 
+            return (this.snakeElements.Any(elem => elem.Row == snakeNewHead.Row &&
                                                    elem.Col == snakeNewHead.Col));
         }
 
-        public bool SnakeHitsBorder(Position snakeNewHead)
+        private bool SnakeHitsBorder(IPosition snakeNewHead)
         {
             return (snakeNewHead.Row == 1 || snakeNewHead.Row == Console.WindowHeight - 2 ||
                     snakeNewHead.Col == 1 || snakeNewHead.Col == Console.WindowWidth - 2);
         }
 
-        public bool SnakeHitsObstacle(IPosition snakeNewHead, IList<IObstacle> obstacles)
+        private bool SnakeHitsObstacle(IPosition snakeNewHead, IList<IObstacle> obstacles)
         {
-            return (obstacles.Any(x => x.ObstacleRowPosition == snakeNewHead.Row && 
-                                       x.ObstacleColPosition == snakeNewHead.Col));
+            return (obstacles.Any(x => x.Row == snakeNewHead.Row &&
+                                       x.Col == snakeNewHead.Col));
         }
     }
 }

@@ -1,10 +1,7 @@
 ﻿namespace SnakeGame.Contracts
 {
-    public interface IApple
+    public interface IApple : IPosition
     {
-        int AppleRowPosition { get; }
-        int AppleColPosition { get; }
-
         void PrintApple();
         void EraseApple();
     }

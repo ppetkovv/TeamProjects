@@ -1,7 +1,18 @@
-﻿namespace SnakeGame.Common
+﻿using SnakeGame.Contracts;
+using SnakeGame.Models;
+using System.Collections.Generic;
+
+namespace SnakeGame.Common
 {
     public static class Constants
     {
+        public static IDictionary<string, IPosition> positionsByIndex = new Dictionary<string, IPosition>(){
+            { "right" , new Position(0,1)},
+            { "left" , new Position(0, -1)},
+            { "down",new Position(1,0)},
+            { "up", new Position(-1,0)},
+        };
+        
         public const string GameOver = "Game over!!!";
         public const string InvalidCommand = "Invalid command!";
         public const string InvalidGameMode = "Please enter valid game mode: ";
