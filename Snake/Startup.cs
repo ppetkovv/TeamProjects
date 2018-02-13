@@ -11,7 +11,7 @@ namespace SnakeGame
         {
             IReader reader = new ConsoleReader();
             IWriter writer = new ConsoleWriter();
-            IEngine engine = new GameEngine(reader,writer);
+            IEngine engine = new GameEngine(reader, writer);
             engine.Start();
         }
     }

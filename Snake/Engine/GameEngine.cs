@@ -5,7 +5,6 @@ using SnakeGame.Levels;
 using SnakeGame.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace SnakeGame.Engine
 {
@@ -36,11 +35,13 @@ namespace SnakeGame.Engine
         {
             ConsoleSetup.SetupConsole();
             int gameMode = this.ChooseGameMode();
+
             for (int i = firstLevelIndex; i <= lastLevelIndex; i++)
             {
                 ILevel currentLevel = LevelGenerator(i);
                 this.GameStartPreparation(i);
                 this.InitializeSnake(currentLevel);
+                this.InitializeGamePoints(currentLevel);
                 currentLevel.GenerateApple();
                 this.ReadCommand(gameMode, currentLevel);
             }
@@ -98,6 +99,11 @@ namespace SnakeGame.Engine
             snake = new Snake(currentLevel.InitialSnakeLevelLength);
         }
 
+        private void InitializeGamePoints(ILevel currentLevel)
+        {
+            gamePoints = new Points(currentLevel.InitialSnakeLevelLength);
+        }
+
         private void ReadCommand(int gameMode, ILevel currentLevel)
         {
             ConsoleSetup.CleaningTheConsoleBuffer();
@@ -107,7 +113,7 @@ namespace SnakeGame.Engine
 
             while (currentLevel.CurrentlyEatenApples != currentLevel.ApplesTarget)
             {
-                IsSnakeAlive(currentLevel);
+                IsGameOver(currentLevel);
                 Borders.PrintBorders();
                 currentLevel.CheckForAppleTimeElapsed();
                 if (Console.KeyAvailable)
@@ -121,8 +127,8 @@ namespace SnakeGame.Engine
                     {
                         direction = GameModeTwoKeyParser(currentCommand);
                     }
-                    //Checking and ignoring direction if incorrect key is pressed !!!
-                    //Checking and ingnoring direction if opposite direction is choosen !!!
+                    //Checking and ignoring direction if incorrect key is pressed +
+                    //Checking and ingnoring direction if opposite direction is chosen
                     CheckingCurrentDirection(ref direction, ref lastCorrectDirection);
                 }
                 ConsoleSetup.SlowAction(currentLevel.SlowActionGame);
@@ -171,7 +177,7 @@ namespace SnakeGame.Engine
             }
         }
 
-        private static void IsSnakeAlive(ILevel currentLevel)
+        private static void IsGameOver(ILevel currentLevel)
         {
             if (!snake.IsAlive)
             {
@@ -181,7 +187,7 @@ namespace SnakeGame.Engine
                 Console.SetCursorPosition((Console.BufferWidth / 2) - Constants.GameOver.Length, 
                                            Console.BufferHeight / 2);
                 Console.WriteLine(Constants.GameOver);
-                string pointsMessage = $"Total points: {gamePoints.AllPoints}";         // make into public const string
+                string pointsMessage = $"Total points: {gamePoints.AllPoints}";
                 Console.SetCursorPosition((Console.BufferWidth / 2) - pointsMessage.Length + 1, 
                                            Console.BufferHeight / 2 + 1);
                 Console.WriteLine(pointsMessage);
