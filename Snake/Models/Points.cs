@@ -1,4 +1,5 @@
 ﻿using SnakeGame.Contracts;
+using System;
 
 namespace SnakeGame.Models
 {
@@ -10,6 +11,10 @@ namespace SnakeGame.Models
 
         public Points(int snakeInitialLength)
         {
+            if(snakeInitialLength < 0)
+            {
+                throw new ArgumentException();
+            }
             this.SnakeInitialLength = snakeInitialLength;
         }
 

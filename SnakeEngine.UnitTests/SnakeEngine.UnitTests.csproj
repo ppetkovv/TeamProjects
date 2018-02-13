@@ -48,11 +48,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Models\PointsTesting\PointsConstructor_Should.cs" />
+    <Compile Include="Models\PointsTesting\PointsProperty_Should.cs" />
+    <Compile Include="Models\PositionTesting\PositionConstructor_Should.cs" />
+    <Compile Include="Models\SnakeTesting\SnakeConstructor_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Snake\SnakeGame.csproj">
+      <Project>{649511c2-ce0f-4b57-be3b-336f28b22cba}</Project>
+      <Name>SnakeGame</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
