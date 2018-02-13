@@ -199,7 +199,6 @@ namespace SnakeGame.Engine
 
         private static void CheckingCurrentDirection(ref string direction, ref string lastCorrectDirection)
         {
-
             direction = direction != "Vari na mainata si" ? direction : lastCorrectDirection;
             if (((direction == "right" || direction == "left") &&
                  (lastCorrectDirection == "right" || lastCorrectDirection == "left")) ||
