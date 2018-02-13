@@ -9,10 +9,10 @@ namespace SnakeGame.Contracts
         int InitialSnakeLevelLength { get; }
 
         IApple Apple { get; }
-        void GenerateApple();
+        void GenerateApple(IList<IObstacle> obstacles);
         int ApplesTarget { get; }
         int CurrentlyEatenApples { get; set; }
-        void CheckForAppleTimeElapsed();
+        void CheckForAppleTimeElapsed(IList<IObstacle> obstacles);
         int LastAppleCreationTime { get; }
         
         int AllLevelPoints { get; }

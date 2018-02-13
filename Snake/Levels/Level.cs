@@ -58,7 +58,7 @@ namespace SnakeGame.Levels
             return randomPosition;
         }
 
-        public void GenerateApple()
+        public void GenerateApple(IList<IObstacle> obstacles)
         {
             if (this.Apple != null)
             {
@@ -66,6 +66,15 @@ namespace SnakeGame.Levels
             }
             IPosition newAppleCoordinates = this.GenerateRandomPosition();
             this.apple = new Apple(newAppleCoordinates.Row, newAppleCoordinates.Col);
+            IObstacle checksForCollision = new Obstacle(newAppleCoordinates.Row, newAppleCoordinates.Col);
+
+            while (obstacles.Contains(checksForCollision))
+            {
+                newAppleCoordinates = this.GenerateRandomPosition();
+                this.apple = new Apple(newAppleCoordinates.Row, newAppleCoordinates.Col);
+                checksForCollision = new Obstacle(newAppleCoordinates.Row, newAppleCoordinates.Col);
+            }
+
             this.apple.PrintApple();
             this.LastAppleCreationTime = Environment.TickCount;
         }
@@ -78,12 +87,12 @@ namespace SnakeGame.Levels
             obstacle.PrintObstacle();
         }
 
-        public void CheckForAppleTimeElapsed()
+        public void CheckForAppleTimeElapsed(IList<IObstacle> obstacles)
         {
             if (Environment.TickCount - this.LastAppleCreationTime >= appleDissapearTimeInMilliseconds)
             {
                 this.levelPoints.NegativePoints += this.NegativePointsPerMissedApple;
-                this.GenerateApple();
+                this.GenerateApple(obstacles);
             }
         }
 

@@ -42,7 +42,7 @@ namespace SnakeGame.Engine
                 this.GameStartPreparation(i);
                 this.InitializeSnake(currentLevel);
                 this.InitializeGamePoints(currentLevel);
-                currentLevel.GenerateApple();
+                currentLevel.GenerateApple(currentLevel.Obstacles);
                 this.ReadCommand(gameMode, currentLevel);
             }
         }
@@ -115,7 +115,7 @@ namespace SnakeGame.Engine
             {
                 IsGameOver(currentLevel);
                 Borders.PrintBorders();
-                currentLevel.CheckForAppleTimeElapsed();
+                currentLevel.CheckForAppleTimeElapsed(currentLevel.Obstacles);
                 if (Console.KeyAvailable)
                 {
                     var currentCommand = Console.ReadKey(true);

@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LevelTesting\GenerateApple_Should.cs" />
     <Compile Include="Models\PointsTesting\PointsConstructor_Should.cs" />
     <Compile Include="Models\PointsTesting\PointsProperty_Should.cs" />
     <Compile Include="Models\PositionTesting\PositionConstructor_Should.cs" />

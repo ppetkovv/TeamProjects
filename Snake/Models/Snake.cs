@@ -58,7 +58,7 @@ namespace SnakeGame.Models
             if (snakeNewHead.Col == currentLevel.Apple.Col &&
                 snakeNewHead.Row == currentLevel.Apple.Row)
             {
-                currentLevel.GenerateApple();
+                currentLevel.GenerateApple(currentLevel.Obstacles);
                 currentLevel.CurrentlyEatenApples += 1;
                 currentLevel.AddPoints();
                 Thread.Sleep(19);
